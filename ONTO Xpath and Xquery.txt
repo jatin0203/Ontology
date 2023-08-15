@@ -1,0 +1,95 @@
+XPATH:
+
+1. Query in English: find the floor number of a shop which has a product with product_brand Calvin Klein
+
+ //shop[product/product_brand = "Calvin Klein"]/floor_no
+OUTPUT:
+0
+
+2. Query in English: Name of all games with age_limit is between 8 and 12 both included and price per head less than or equal to 100
+
+//games[age_limit >= 9 and age_limit <= 12 and price_per_head <= 100]/game_name
+OUTPUT:
+Fosball
+net_cricket
+
+3. Query in English: To get contact of owners of vehicle who have private vehicle and parked in the Basement
+
+//parking[address = 'Basement']/vehicles[vehicle_detail/@public_or_private = 'private']/vehicle_detail[./owner_detail]/owner_detail/owner_contact
+
+OUTPUT:
+896734977
+7679519534 
+
+4. Query in English: Name of resturant where price of any cuisine is less than 300
+
+//resturant[cuisine/price < 300]/res_name/text()
+
+OUTPUT:
+Wow Momo
+Dominos
+punjabi_zaika  
+
+XQUERY:
+
+1.Query in English:Product Name of any product with product gauranty equal to 1 
+
+for $p in //product[@warrenty='1']
+return $p/product_name/text()
+
+OUTPUT:
+T-Shirts
+Jeans
+Xiaomi 11T pro 5g
+Mi Wired Headset
+Sterling silver stylish Ring
+925 Sterling silver CZ Flower Shape Diamond Pendant
+Blue CZ Earring
+
+2.Query in English:Names of all cuisine in restaurant Punjabi_zaika
+
+for $r in //resturant[ res_name = "Punjabi_zaika"]
+return $r/cuisine/name/text()
+
+OUTPUT:
+Punjabi_paneer
+paneer_achari
+Lassi
+Butter_naan
+Lacha_paratha
+
+3.Query in English:cheapest item in resturant Dominos and its price
+
+let $dominos := //resturant[res_name = "Dominos"]
+let $cuisines := $dominos/cuisine
+let $cheapest-cuisine := $cuisines[price = min($cuisines/price)]
+return <result>
+<cuisine-name>{ $cheapest-cuisine/name/text() }</cuisine-name>
+<cuisine-price>{ $cheapest-cuisine/price/text() }</cuisine-price>
+</result>
+
+OUTPUT:
+cheese garlic bread
+200 
+
+4.Query in English: Closing timings of all resturant with rating equal to 4
+
+for $restaurant in //resturant[@rating='4']
+return $restaurant/timings/closing/text()
+
+
+OUTPUT:
+20:00
+2:00
+
+5.Query in English:website of all shops with category types Electronics
+
+for $shop in //shop[category_type='Electronics']
+return $shop/website/text()
+
+OUTPUT:
+https://www.mi.com 
+
+
+
+ 
